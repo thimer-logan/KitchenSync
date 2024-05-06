@@ -4,7 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../styles/theme";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import { Box } from "@mui/material";
 import { NavLink } from "@/types/navigation";
 import HomeIcon from "@mui/icons-material/Home";
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const drawerWidth = 240;
 const navlinks: NavLink[] = [
   { name: "Home", link: "/", Icon: HomeIcon },
-  { name: "Ingredients", link: "/ingredients", Icon: KitchenIcon },
+  { name: "Storage", link: "/storage", Icon: KitchenIcon },
   { name: "Recipes", link: "/recipes", Icon: RestaurantMenuIcon },
   { name: "Meal Planner", link: "/mealplanner", Icon: MenuBookIcon },
 ];
@@ -42,9 +42,9 @@ export default function RootLayout({
               component="main"
               sx={{
                 flexGrow: 1,
-                p: 3,
+                p: 1,
                 width: { sm: `calc(100% - ${drawerWidth}px)` },
-                mt: 8,
+                mt: { xs: 8, sm: 0 },
                 ml: { sm: `${drawerWidth}px` },
               }}
             >

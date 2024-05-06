@@ -45,7 +45,11 @@ function Navbar({ navlinks, drawerWidth = 240 }: NavbarProps) {
 
   const drawer = (
     <div>
-      <Toolbar />
+      <Toolbar>
+        <Typography variant="h6" color="white" noWrap>
+          Kitchen Sync
+        </Typography>
+      </Toolbar>
       <Divider />
       <List>
         {navlinks.map((link, index) => (
@@ -75,6 +79,7 @@ function Navbar({ navlinks, drawerWidth = 240 }: NavbarProps) {
         position="fixed"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
+          display: { sm: "none", xs: "flex" },
         }}
       >
         <Toolbar>
