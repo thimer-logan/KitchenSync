@@ -18,6 +18,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { NavLink } from "../../types/navigation";
 import Link from "next/link";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { logout } from "@/app/logout/actions";
+import NavbarLink from "./NavbarLink";
 
 interface NavbarProps {
   navlinks: NavLink[];
@@ -44,33 +47,40 @@ function Navbar({ navlinks, drawerWidth = 240 }: NavbarProps) {
   };
 
   const drawer = (
-    <div>
-      <Toolbar>
-        <Typography variant="h6" color="white" noWrap>
-          Kitchen Sync
-        </Typography>
-      </Toolbar>
-      <Divider />
-      <List>
-        {navlinks.map((link, index) => (
-          <Link
-            href={link.link}
-            key={link.name}
-            passHref
-            className="text-white"
-          >
-            <ListItem key={link.name} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <link.Icon sx={{ color: "white" }} />
-                </ListItemIcon>
-                <ListItemText primary={link.name} />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-    </div>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <div>
+        <Toolbar>
+          <Typography variant="h6" color="white" noWrap>
+            Kitchen Sync
+          </Typography>
+        </Toolbar>
+        <Divider />
+        <List>
+          {navlinks.map((link, index) => (
+            <NavbarLink
+              link={link}
+              href={link.link}
+              key={link.name}
+              className="text-white"
+              activeClassName="bg-black"
+            />
+          ))}
+        </List>
+      </div>
+      <div>
+        <Divider />
+        <List>
+          <ListItem disablePadding sx={{ color: "white" }}>
+            <ListItemButton onClick={() => logout()}>
+              <ListItemIcon>
+                <LogoutIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </div>
+    </Box>
   );
 
   return (
