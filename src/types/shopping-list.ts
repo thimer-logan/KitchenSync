@@ -1,13 +1,16 @@
 export type ShoppingListItem = {
+  id: string;
+  created_at: string;
   ingredientId: string;
-  quantityNeeded: number;
   quantityPurchased: number;
   isPurchased: boolean;
-  unit: string;
+  shoppingListId: string;
 };
 
 export type ShoppingList = {
   id: string;
-  dateCreated: string;
+  created_at: string;
+  name: string;
   items: ShoppingListItem[];
+  store?: string;
 };
