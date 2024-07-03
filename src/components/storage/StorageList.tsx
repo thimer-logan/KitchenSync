@@ -34,9 +34,9 @@ export default function StorageList({ items, sortBy }: IngredientListProps) {
 
     const groupMap = new Map<string, StorageItem[]>();
     sortedItems.forEach((item) => {
-      let groupKey = item.category ?? "Other";
+      let groupKey = item.category || "Other";
       if (sortBy === "brand") {
-        groupKey = item.brand ?? "Other";
+        groupKey = item.brand || "Other";
       }
 
       if (groupMap.has(groupKey)) {
