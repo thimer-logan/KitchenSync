@@ -82,7 +82,20 @@ export default function StorageHeader() {
             label="Sort By"
             onChange={handleSortChange}
             autoWidth
+            MenuProps={{
+              MenuListProps: {
+                sx: {
+                  // Hide the placeholder option in the dropdown
+                  'li[data-value=""]': {
+                    display: "none",
+                  },
+                },
+              },
+            }}
           >
+            <MenuItem key="placeholder" value="">
+              Select...
+            </MenuItem>
             <MenuItem value="name">Name</MenuItem>
             <MenuItem value="brand">Brand</MenuItem>
             <MenuItem value="category">Category</MenuItem>
@@ -99,7 +112,20 @@ export default function StorageHeader() {
             label="Filter By"
             onChange={handleFilterChange}
             autoWidth
+            MenuProps={{
+              MenuListProps: {
+                sx: {
+                  // Hide the placeholder option in the dropdown
+                  'li[data-value=""]': {
+                    display: "none",
+                  },
+                },
+              },
+            }}
           >
+            <MenuItem key="placeholder" value="">
+              Select...
+            </MenuItem>
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="lowStock">Low Stock</MenuItem>
             <MenuItem value="inStock">In Stock</MenuItem>
