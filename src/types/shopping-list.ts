@@ -1,10 +1,10 @@
 export type ShoppingListItem = {
   id: string;
   created_at: string;
-  ingredientId: string;
   quantityPurchased: number;
   isPurchased: boolean;
   shoppingListId: string;
+  storageItemId: string;
 };
 
 export type ShoppingList = {
