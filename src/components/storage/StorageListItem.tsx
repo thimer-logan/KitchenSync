@@ -40,18 +40,6 @@ export default function StorageListItem({ item }: StorageListItemProps) {
     onSwiped: () => setStopScroll(false),
   });
 
-  const actions = [
-    {
-      icon: (
-        <Link href={`/a/storage/${item.id}/add-to-list`}>
-          <ShoppingCartCheckoutIcon />
-        </Link>
-      ),
-      name: "Add to shopping list",
-    },
-    { icon: <DeleteIcon />, name: "Delete" },
-  ];
-
   const handleAction = (actionName: string) => {
     if (actionName === "Delete") {
       deleteStorageItem(item.id);
