@@ -19,7 +19,7 @@ import {
   MdKitchen,
 } from "react-icons/md";
 
-const iconMapping: { [key: string]: React.ElementType } = {
+const storageIconMapping: { [key: string]: React.ElementType } = {
   // Vegetables
   broccoli: GiBroccoli,
   lettuce: MdLocalDining,
@@ -113,4 +113,4 @@ const iconMapping: { [key: string]: React.ElementType } = {
   default: MdLocalDining,
 };
 
-export default iconMapping;
+export default storageIconMapping;

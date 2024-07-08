@@ -18,12 +18,13 @@ import Fade from "@mui/material/Fade";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
-import iconMapping from "@/constants/iconMapping";
+import storageIconMapping from "@/constants/iconMapping";
 import { deleteStorageItem } from "@/app/a/storage/actions";
 
 const getIconByName = (ingredientName: string): React.ReactElement => {
   const IconComponent =
-    iconMapping[ingredientName.toLowerCase()] || iconMapping.default;
+    storageIconMapping[ingredientName.toLowerCase()] ||
+    storageIconMapping.default;
   return <IconComponent size={24} />;
 };
 
