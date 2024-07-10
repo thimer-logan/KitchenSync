@@ -31,7 +31,6 @@ export type StorageItem = {
   description: string;
   category: string;
   quantity: number;
-  threshold: number;
   unit: Units;
   brand?: string;
   created_at?: string;

@@ -11,7 +11,6 @@ function objectifyFormData(data: FormData) {
     category: data.get("category"),
     brand: data.get("brand"),
     quantity: data.get("quantity"),
-    threshold: data.get("threshold"),
     unit: data.get("unit"),
   };
 }

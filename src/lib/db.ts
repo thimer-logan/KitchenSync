@@ -91,7 +91,7 @@ export async function generateShoppingListItems(
 
   // Filter items that are below the threshold
   const shoppingListItems = items
-    .filter((item) => item.quantity < item.threshold)
+    .filter((item) => item.quantity <= 0)
     .map((item) => ({
       ...item,
     }));
