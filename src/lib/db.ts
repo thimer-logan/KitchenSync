@@ -44,20 +44,66 @@ export async function getStorageItemCategories(supabase: SupabaseClient) {
 }
 
 export async function getShoppingLists(supabase: SupabaseClient) {
-  const { data, error } = await supabase.from("shopping_lists").select("*");
-  const shoppingLists: ShoppingList[] = data || [];
+  // Fetch shopping lists and perform inner join with shopping_list_items and storage tables
+  const { data, error } = await supabase.from("shopping_lists").select(`
+      *,
+      items:shopping_list_items(*, storageItem:storage(*))
+    `);
+
+  if (error) {
+    console.error("Error fetching shopping lists:", error);
+    return { shoppingLists: null, error };
+  }
+
+  // Process and return the data
+  const shoppingLists: ShoppingList[] = data.map(
+    (shoppingList: ShoppingList) => ({
+      ...shoppingList,
+      items: shoppingList.items.map((item: any) => ({
+        id: item.id,
+        created_at: item.created_at,
+        quantityPurchased: item.quantityPurchased,
+        isPurchased: item.isPurchased,
+        shoppingListId: item.shoppingListId,
+        storageItem: item.storageItem, // Include the full StorageItem object
+      })),
+    })
+  );
+
   return { shoppingLists, error };
 }
 
 export async function getShoppingList(supabase: SupabaseClient, id: string) {
   const { data, error } = await supabase
     .from("shopping_lists")
-    .select("*")
-    .eq("id", id);
+    .select(
+      `
+      *,
+      items:shopping_list_items(*, storageItem:storage_items(*))
+    `
+    )
+    .eq("id", id)
+    .single();
 
-  const shoppingList: ShoppingList = data?.[0];
+  if (error) {
+    console.error("Error fetching shopping list:", error);
+    return { shoppingList: null, error };
+  }
 
-  return { shoppingList, error };
+  // Process and return the data
+  const shoppingList: ShoppingList = {
+    ...data,
+    items: data.items.map((item: any) => ({
+      id: item.id,
+      created_at: item.created_at,
+      quantityPurchased: item.quantityPurchased,
+      isPurchased: item.isPurchased,
+      shoppingListId: item.shoppingListId,
+      storageItem: item.storageItem, // Include the full StorageItem object
+    })),
+  };
+
+  return { shoppingList, error: null };
 }
 
 export async function getShoppingListItems(
@@ -68,6 +114,14 @@ export async function getShoppingListItems(
     .from("shopping_list_items")
     .select("*")
     .eq("shopping_list_id", id);
+
+  return { shoppingListItems: data, error };
+}
+
+export async function getAllShoppingListItems(supabase: SupabaseClient) {
+  const { data, error } = await supabase
+    .from("shopping_list_items")
+    .select("*");
 
   return { shoppingListItems: data, error };
 }
