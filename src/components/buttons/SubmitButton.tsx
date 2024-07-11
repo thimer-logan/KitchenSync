@@ -1,20 +1,14 @@
 "use client";
 
-import { Button, SxProps, Theme } from "@mui/material";
+import { Button, ButtonProps, SxProps, Theme } from "@mui/material";
 import React from "react";
 import { useFormStatus } from "react-dom";
 
-interface SubmitButtonProps {
+interface SubmitButtonProps extends ButtonProps {
   text: string;
-  className?: string;
-  sx?: SxProps<Theme> | undefined;
 }
 
-export default function SubmitButton({
-  text,
-  className,
-  sx,
-}: SubmitButtonProps) {
+export default function SubmitButton({ text, ...props }: SubmitButtonProps) {
   const { pending } = useFormStatus();
   return (
     <Button
@@ -22,8 +16,7 @@ export default function SubmitButton({
       variant="contained"
       color="primary"
       disabled={pending}
-      className={className}
-      sx={sx}
+      {...props}
     >
       {text}
     </Button>
