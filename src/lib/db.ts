@@ -79,7 +79,7 @@ export async function getShoppingList(supabase: SupabaseClient, id: string) {
     .select(
       `
       *,
-      items:shopping_list_items(*, storageItem:storage_items(*))
+      items:shopping_list_items(*, storageItem:storage(*))
     `
     )
     .eq("id", id)
