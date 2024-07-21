@@ -57,5 +57,5 @@ export default function StorageList({ items, sortBy }: IngredientListProps) {
     ));
   };
 
-  return <List>{renderList()}</List>;
+  return <List sx={{ marginBottom: 8 }}>{renderList()}</List>;
 }
