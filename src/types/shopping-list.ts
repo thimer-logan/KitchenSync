@@ -14,6 +14,7 @@ export type ShoppingList = {
   created_at: string;
   name: string;
   items: ShoppingListItem[];
+  completed: boolean;
   store?: string;
 };
 

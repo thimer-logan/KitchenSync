@@ -96,9 +96,9 @@ export async function getShoppingList(supabase: SupabaseClient, id: string) {
     items: data.items.map((item: any) => ({
       id: item.id,
       created_at: item.created_at,
-      quantityPurchased: item.quantityPurchased,
-      isPurchased: item.isPurchased,
-      shoppingListId: item.shoppingListId,
+      quantityPurchased: item.quantity_purchased,
+      isPurchased: item.is_purchased,
+      shoppingListId: item.shopping_list_id,
       storageItem: item.storageItem, // Include the full StorageItem object
     })),
   };
@@ -154,4 +154,15 @@ export async function generateShoppingListItems(
     name: "Generated Shopping List",
     store: "Local Store",
   };
+}
+
+export async function saveShoppingListItems(
+  supabase: SupabaseClient,
+  items: any[]
+) {
+  const { data, error } = await supabase
+    .from("shopping_list_items")
+    .upsert(items);
+
+  return { data, error };
 }
