@@ -1,5 +1,6 @@
 "use server";
 
+import { getMostFrequentStore } from "@/lib/db";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -163,4 +164,49 @@ export async function addShoppingListItem(
   await supabase.from("shopping_list_items").insert(shoppingListItem);
 
   revalidatePath(`/a/shoppinglist`);
+}
+
+export async function generateShoppingList(): Promise<void> {
+  const supabase = createClient();
+  const { store, error: storeError } = await getMostFrequentStore(supabase);
+  const shoppingList = {
+    name: "Generated Shopping List",
+    store,
+  };
+
+  const { data: resData, error } = await supabase
+    .from("shopping_lists")
+    .insert(shoppingList)
+    .select()
+    .single();
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  revalidatePath("/a/shoppinglist");
+  redirect(`/a/shoppinglist/${resData.id}/edit`);
+}
+
+export async function deleteShoppingList(id: string): Promise<void> {
+  const supabase = createClient();
+  await supabase.from("shopping_lists").delete().eq("id", id);
+  revalidatePath("/a/shoppinglist");
+  redirect("/a/shoppinglist");
+}
+
+export async function markShoppingListAsComplete(id: string): Promise<void> {
+  const supabase = createClient();
+  await supabase
+    .from("shopping_list_items")
+    .update({ is_purchased: true })
+    .eq("shopping_list_id", id);
+
+  await supabase.rpc("update_storage_quantities", {
+    p_shopping_list_id: id,
+  });
+
+  revalidatePath("/a/shoppinglist");
+  redirect("/a/shoppinglist");
 }

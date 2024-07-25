@@ -22,6 +22,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { stores } from "@/constants/storeImageMapping";
+import {
+  deleteShoppingList,
+  markShoppingListAsComplete,
+} from "@/app/a/shoppinglist/actions";
 
 interface ShoppingListListItemProps {
   shoppingList: ShoppingList;
@@ -37,12 +41,12 @@ export default function ShoppingListListItem({
       (store) => store.name.toLowerCase() === item.store?.toLowerCase()
     )?.image || "";
 
-  const handleAction = (actionName: string) => {
+  const handleAction = async (actionName: string) => {
     if (actionName === "delete") {
+      await deleteShoppingList(item.id);
     } else if (actionName === "edit") {
-      console.log("");
     } else if (actionName === "confirm") {
-      console.log("");
+      await markShoppingListAsComplete(item.id);
     }
 
     handleClose();
