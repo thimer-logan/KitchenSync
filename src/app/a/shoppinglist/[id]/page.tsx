@@ -31,6 +31,7 @@ export default async function ShoppingListPage({
         <ShoppingListItems
           shoppingListItems={shoppingList.items}
           saveItems={saveItems}
+          disabled={shoppingList.completed}
         />
       </Box>
     </Box>

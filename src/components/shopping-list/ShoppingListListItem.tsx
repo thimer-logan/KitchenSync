@@ -34,6 +34,9 @@ interface ShoppingListListItemProps {
 export default function ShoppingListListItem({
   shoppingList: item,
 }: ShoppingListListItemProps) {
+  const numVisibleChips = Math.min(2, item.items.length);
+  const hiddenItemCount = item.items.length - numVisibleChips;
+
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
   const imageUrl =
@@ -77,6 +80,7 @@ export default function ShoppingListListItem({
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             onClick={handleOpen}
+            disabled={item.completed}
           >
             <MoreHorizIcon />
           </IconButton>
@@ -97,13 +101,15 @@ export default function ShoppingListListItem({
                     gap: 0.5,
                   }}
                 >
-                  {item.items.map((item) => (
+                  {item.items.slice(0, numVisibleChips).map((item) => (
                     <Chip
                       key={item.storageItem.id}
                       label={item.storageItem.name}
-                      //sx={{ margin: 0.5 }}
                     />
                   ))}
+                  {hiddenItemCount > 0 && (
+                    <Chip label={`+ ${hiddenItemCount} more`} />
+                  )}
                 </Box>
               }
               primaryTypographyProps={{ variant: "h6" }}
@@ -132,7 +138,11 @@ export default function ShoppingListListItem({
           Confirm Shopping List
         </MenuItem>
         <MenuItem key="edit-item">
-          <Link href={`/a/shoppinglist/${item.id}/edit`} passHref>
+          <Link
+            href={`/a/shoppinglist/${item.id}/edit`}
+            passHref
+            className="grow"
+          >
             <ListItemIcon>
               <EditIcon />
             </ListItemIcon>

@@ -1,4 +1,4 @@
-import { Box, Fab } from "@mui/material";
+import { Box, Fab, Typography } from "@mui/material";
 import React from "react";
 import ShoppingListHeader from "./ShoppingListHeader";
 import ShoppingListList from "@/components/shopping-list/ShoppingListList";
@@ -20,19 +20,30 @@ export default async function ShoppingListPage() {
     return <div>Error loading shopping lists</div>;
   }
 
+  // Sort between completed and uncompleted shopping lists
+  const completedLists = shoppingLists.filter((list) => list.completed);
+  const uncompletedLists = shoppingLists.filter((list) => !list.completed);
+
   return (
     <Box component="div">
       <ShoppingListHeader />
       <Box component="div" sx={{ maxWidth: "600px" }}>
-        <ShoppingListList items={shoppingLists} />
+        <div className="mb-4">
+          <Typography variant="h5">Active</Typography>
+          {uncompletedLists.length > 0 ? (
+            <ShoppingListList items={uncompletedLists} />
+          ) : (
+            <Typography variant="body1">No active lists</Typography>
+          )}
+        </div>
+
+        {completedLists.length > 0 && (
+          <>
+            <Typography variant="h5">Older</Typography>
+            <ShoppingListList items={completedLists} />
+          </>
+        )}
       </Box>
-      {/* <Fab
-        color="primary"
-        aria-label="add"
-        sx={{ position: "fixed", bottom: 8, right: 8 }}
-      >
-        <AddIcon />
-      </Fab> */}
     </Box>
   );
 }

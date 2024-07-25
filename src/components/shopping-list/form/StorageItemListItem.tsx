@@ -13,6 +13,7 @@ interface StorageItemListItemProps {
   checkable?: boolean;
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
+  disabled?: boolean;
 }
 
 export default function StorageItemListItem({
@@ -21,6 +22,7 @@ export default function StorageItemListItem({
   checkable = false,
   checked = false,
   onCheckedChange,
+  disabled = false,
 }: //onDelete,
 StorageItemListItemProps) {
   const { name, quantity, unit } = storageItem;
@@ -45,6 +47,7 @@ StorageItemListItemProps) {
               icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
               checkedIcon={<CheckBoxIcon fontSize="small" />}
               style={{ marginRight: 8 }}
+              disabled={disabled}
               checked={checked}
               onChange={handleCheckedChange}
               inputProps={{ "aria-label": "controlled" }}
@@ -62,6 +65,7 @@ StorageItemListItemProps) {
         <div className="flex flex-row justify-end items-center">
           <NumberInput
             aria-label="Quantity Input"
+            disabled={disabled}
             value={quantity}
             min={0}
             //endAdornment={<InputAdornment>{unit}</InputAdornment>}

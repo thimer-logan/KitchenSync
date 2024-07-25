@@ -63,6 +63,7 @@ function Navbar({ navlinks, drawerWidth = 240 }: NavbarProps) {
               key={link.name}
               className="text-white"
               activeClassName="bg-black"
+              onClick={handleDrawerClose}
             />
           ))}
         </List>

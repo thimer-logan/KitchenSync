@@ -9,12 +9,13 @@ import { useDebouncedCallback } from "use-debounce";
 interface ShoppingListItemsProps {
   shoppingListItems: ShoppingListItem[];
   saveItems: (items: ShoppingListItem[]) => Promise<void>;
-  // setItems: React.Dispatch<React.SetStateAction<ShoppingListItem[]>>;
+  disabled?: boolean;
 }
 
 export default function ShoppingListItems({
   shoppingListItems,
   saveItems,
+  disabled = false,
 }: ShoppingListItemsProps) {
   const [items, setItems] = useState(shoppingListItems);
   const [isPending, startTransition] = useTransition();
@@ -28,10 +29,14 @@ export default function ShoppingListItems({
 
   // Watch for changes to the items state and debounce the save function
   useEffect(() => {
-    debouncedSaveItems(items);
-  }, [items, debouncedSaveItems]);
+    if (!disabled) {
+      debouncedSaveItems(items);
+    }
+  }, [items, debouncedSaveItems, disabled]);
 
   const handleItemQuantityChange = (id: string, quantity: number) => {
+    if (disabled) return;
+
     startTransition(() => {
       setItems((prevItems) =>
         prevItems.map((item) => {
@@ -48,6 +53,8 @@ export default function ShoppingListItems({
   };
 
   const handleItemCheckedChange = (id: string, checked: boolean) => {
+    if (disabled) return;
+
     startTransition(() => {
       setItems((prevItems) =>
         prevItems.map((item) => {
@@ -85,6 +92,7 @@ export default function ShoppingListItems({
         {groupMap.get(category)?.map((item) => (
           <StorageItemListItem
             key={item.id}
+            disabled={disabled}
             storageItem={{
               ...item.storageItem,
               quantity: item.quantityPurchased,
