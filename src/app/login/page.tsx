@@ -1,5 +1,6 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Container, TextField, Typography } from "@mui/material";
 import { login } from "./actions";
+import SubmitButton from "@/components/buttons/SubmitButton";
 
 export default function LoginPage() {
   return (
@@ -36,15 +37,14 @@ export default function LoginPage() {
             id="password"
             autoComplete="current-password"
           />
-          <Button
+          <SubmitButton
             type="submit"
             formAction={login}
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
+            text="Sign In"
+          />
         </Box>
       </Box>
     </Container>
