@@ -14,8 +14,6 @@ import { redirect } from "next/navigation";
  * @returns {Promise<void>}
  */
 export async function createShoppingList(data: FormData): Promise<void> {
-  console.log(...data);
-
   const shoppingList = {
     name: data.get("name"),
     store: data.get("store"),

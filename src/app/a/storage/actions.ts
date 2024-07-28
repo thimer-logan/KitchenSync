@@ -23,7 +23,9 @@ export async function createStorageItem(data: FormData) {
     .select()
     .single();
 
-  console.log(resData, error);
+  if (error) {
+    console.error(error);
+  }
 
   revalidatePath("/a/storage");
   redirect("/a/storage");
@@ -38,7 +40,9 @@ export async function updateStorageItem(id: string, data: FormData) {
     .select()
     .single();
 
-  console.log(resData, error);
+  if (error) {
+    console.error(error);
+  }
 
   revalidatePath("/a/storage");
   redirect("/a/storage");
@@ -48,7 +52,9 @@ export async function deleteStorageItem(id: string) {
   const supabase = createClient();
   const { error } = await supabase.from("storage").delete().eq("id", id);
 
-  console.log(error);
+  if (error) {
+    console.error(error);
+  }
 
   revalidatePath("/a/storage");
   redirect("/a/storage");

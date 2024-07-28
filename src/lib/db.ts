@@ -200,6 +200,8 @@ export async function generateShoppingListItems(
   const groupedItems = groupShoppingListItemsByStorageItem(shoppingListItems);
 
   const shoppingListItemsToCreate: any[] = [];
+
+  // For now, just use the quantity purchased from the first item in the group
   lowStockItems.forEach((item) => {
     const shoppingListItem = {
       storage_item_id: item.id,
@@ -247,7 +249,6 @@ export async function saveShoppingListItems(
 
 export async function getMostFrequentStore(supabase: SupabaseClient) {
   const { data, error } = await supabase.rpc("get_most_popular_store");
-  console.log("MPS", data);
 
   return { store: data, error };
 }
