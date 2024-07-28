@@ -78,7 +78,7 @@ export default function StorageHeader() {
           <InputLabel id="sort-label">Sort By</InputLabel>
           <Select
             labelId="sort-label"
-            defaultValue={searchParams.get("sortBy")?.toString()}
+            defaultValue={searchParams.get("sortBy")?.toString() || ""}
             label="Sort By"
             onChange={handleSortChange}
             autoWidth
@@ -108,7 +108,7 @@ export default function StorageHeader() {
           <InputLabel id="filter-label">Filter By</InputLabel>
           <Select
             labelId="filter-label"
-            defaultValue={searchParams.get("filterBy")?.toString()}
+            defaultValue={searchParams.get("filterBy")?.toString() || ""}
             label="Filter By"
             onChange={handleFilterChange}
             autoWidth
