@@ -1,7 +1,10 @@
 import StorageList from "@/components/storage/StorageList";
-import { Box, Typography } from "@mui/material";
+import { Box, Fab, Typography } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import { createClient } from "@/utils/supabase/server";
 import { getStorageItemCategories, getStorageItems } from "@/lib/db";
+import StorageHeader from "./StorageHeader";
+import Link from "next/link";
 
 async function getData() {
   const supabase = createClient();
@@ -34,6 +37,15 @@ export default async function StoragePage({
     return <Typography>Error loading ingredients</Typography>;
   }
 
+  // Filtering step first
+  if (searchParams?.filterBy) {
+    if (searchParams.filterBy.toLowerCase() === "lowstock") {
+      items = items.filter((item) => item.quantity <= 0);
+    } else if (searchParams.filterBy.toLowerCase() === "instock") {
+      items = items.filter((item) => item.quantity > 0);
+    }
+  }
+
   // Search query will check names and brand
   if (searchParams?.query) {
     items = items.filter(
@@ -48,8 +60,20 @@ export default async function StoragePage({
   }
 
   return (
-    <Box component="div" sx={{ maxWidth: "600px" }}>
-      <StorageList items={items} sortBy={searchParams?.sortBy} />
+    <Box component="div">
+      <StorageHeader />
+      <Box component="div" sx={{ maxWidth: "600px" }}>
+        <StorageList items={items} sortBy={searchParams?.sortBy} />
+      </Box>
+      <Fab
+        color="primary"
+        aria-label="add"
+        sx={{ position: "fixed", bottom: 8, right: 8 }}
+      >
+        <Link href="/a/storage/new" passHref>
+          <AddIcon />
+        </Link>
+      </Fab>
     </Box>
   );
 }
