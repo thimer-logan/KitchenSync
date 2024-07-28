@@ -1,6 +1,6 @@
 "use server";
 
-import { getMostFrequentStore } from "@/lib/db";
+import { generateShoppingListItems, getMostFrequentStore } from "@/lib/db";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -184,6 +184,8 @@ export async function generateShoppingList(): Promise<void> {
     console.log(error);
     return;
   }
+
+  await generateShoppingListItems(supabase, resData.id);
 
   revalidatePath("/a/shoppinglist");
   redirect(`/a/shoppinglist/${resData.id}/edit`);
